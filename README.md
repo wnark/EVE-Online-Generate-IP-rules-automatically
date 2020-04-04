@@ -5,7 +5,7 @@
 
 ## 拿来即用
 
-点击下载[Eve-online.rules](https://raw.githubusercontent.com/wnark/eve-online-Generate-IP-rules-automatically/master/Eve-online.rules "Eve-online.rules")
+使用右键另存为 - 保存文件[Eve-online.rules](https://raw.githubusercontent.com/wnark/eve-online-Generate-IP-rules-automatically/master/Eve-online.rules "Eve-online.rules")
 
 ## 需要处理域名
 ```
