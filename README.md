@@ -7,6 +7,8 @@
 
 使用鼠标右键 - 链接另存为 - 下载保存文件[Eve-online.rules](https://raw.githubusercontent.com/wnark/eve-online-Generate-IP-rules-automatically/master/Eve-online.rules "Eve-online.rules")
 
+由于CCP的聊天服务器ip经常大范围变动，如果你发现你连不上聊天服务器了，并且live.chat.eveonline.com的规则和live.txt不一样，那就表示又要生成新的规则了，请在评论/github提出，我更新文件（或者你自己执行脚本，反正超简单）
+
 ## 需要处理域名
 ```
 tranquility.servers.eveonline.com
