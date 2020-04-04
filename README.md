@@ -1,37 +1,34 @@
-# akamTester
-批量测试B站海外CDN（upos-hz-mirrorakam.akamaized.net）节点延迟，找出最低延迟的节点。
+# EVE-Online-Generate-IP-rules-automatically
+本项目获取eve online域名对应的所有ip，储存并生成对应的rule文件
 
-在之后在Hosts中追加：
+**本项目是 miyouzi/akamTester 的分支**
+
+## 需要处理域名
 ```
-最低延迟的IP upos-hz-mirrorakam.akamaized.net
+tranquility.servers.eveonline.com
+live.chat.eveonline.com
+launcher.eveonline.com
+resources.eveonline.com
+binaries.eveonline.com
 ```
 
-另外, ```ip_list.txt``` 文件用于保存解析出来的ip列表, 当正常解析完成时, 该文件会刷新, 当解析失败时, 会读取该文件中的ip列表。
+
+```Eve-online.rules``` 为最终生成的文件，适用sstap版本：1.0.9.7
+
+**Eve-online.rules文件仅在本项目更新，偶尔在FQrabbit/SSTap-Rule内更新**
  
-:warning: 在Win7上需要使用管理员权限运行! :warning:
 
-## EXE文件运行
-不熟悉Python的用户从 [releases](https://github.com/miyouzi/akamTester/releases/latest) 下载exe文件直接使用。
 
 ## 源码运行
 
 安装依赖:
 ```
-pip3 install requests beautifulsoup4 lxml termcolor pythonping dnspython
+pip3 install requests beautifulsoup4 lxml termcolor pythonping dnspython IPy
 ```
 
-执行 ```akamTester.py```
+执行 ```eve-online-rule.py```
 ```
-python3 akamTester.py
-```
-
-## 指定测试域名
-
-从v3.2开始, 用户可以通过```-u```参数指定测试域名.
-
-举例:
-```
-python3 akamTester.py -u upos-sz-mirrorks3.bilivideo.com
+python3 eve-online-rule.py
 ```
 
 ## 关于轮子
@@ -65,4 +62,38 @@ from ColorPrinter import color_print
 color_print('Hello World')  # 默认输出颜色
 color_print('Hello World', status=1)  # 输出红色
 color_print('Hello World', status=2)  # 输出绿色
+```
+
+### miyouzi/akamTester
+使用它的轮子来获取每个域名的所有ip
+```
+try:
+    akam = GlobalDNS(host)
+    color_print('第一次解析:')
+    ip_list = akam.get_ip_list()
+    print()
+    color_print('第二次解析:')
+    akam.renew()
+    ip_list = ip_list | akam.get_ip_list()
+    print()
+    color_print('第三次解析:')
+    akam.renew()
+    ip_list = ip_list | akam.get_ip_list()
+except BaseException as e:
+    color_print('进行全球解析时遇到未知错误: '+str(e), status=1)
+    if os.path.exists(ip_list_path):
+        color_print('将读取本地保存的ip列表', status=1)
+        with open(ip_list_path, 'r', encoding='utf-8') as f:
+            ip_list = f.read().splitlines()
+    else:
+        color_print('没有本地保存的ip列表！程序终止！', status=1)
+        print()
+        input('按回车退出')
+        sys.exit(0)
+else:
+    # 保存解析结果
+    with open(ip_list_path, 'w', encoding='utf-8') as f:
+        for ip in ip_list:
+            f.write(str(ip))
+            f.write('\n')
 ```
